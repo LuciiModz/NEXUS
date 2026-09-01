@@ -18,7 +18,7 @@
 ## Install
 
 ```bash
-git clone https://github.com/LuciiModz/NEXUS.git
+git clone https://github.com/LuciiModz/lucii-toolkit-Linux
 cd NEXUS
 chmod +x install.sh && sudo ./install.sh
 pip install -r requirements.txt --break-system-packages
