@@ -276,10 +276,10 @@ TOOLS = {
                 "cmd": lambda f: f'searchsploit "{f[0]}"',
             },
             {
-                "id": "5", "name": "pwncat-cs",
-                "desc": "Stable shell with PTY upgrade",
+                "id": "5", "name": "rlwrap nc (stable listener)",
+                "desc": "Stable PTY listener via rlwrap + netcat",
                 "fields": [("lport","LPORT","4444")],
-                "cmd": lambda f: f"pwncat-cs -lp {f[0]}",
+                "cmd": lambda f: f"rlwrap nc -nlvp {f[0]}",
             },
             {
                 "id": "6", "name": "TTY Upgrade",

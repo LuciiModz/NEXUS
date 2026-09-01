@@ -62,9 +62,6 @@ pip3 install shodan --break-system-packages --no-deps 2>/dev/null || warn "shoda
 ok "Installing bloodhound..."
 pip3 install bloodhound==1.6.1 --break-system-packages --no-deps 2>/dev/null || warn "bloodhound install failed."
 
-# ── pwncat-cs (isolated — conflicts with rich>=13) ───────────────────────────
-ok "Installing pwncat-cs (no-deps)..."
-pip3 install pwncat-cs --break-system-packages --no-deps 2>/dev/null || warn "pwncat-cs install failed."
 
 # ── Ruby gems ────────────────────────────────────────────────────────────────
 ok "Installing Ruby gems (evil-winrm, wpscan)..."
