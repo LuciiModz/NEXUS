@@ -41,6 +41,10 @@ APT_PKGS=(
 ok "Installing apt packages..."
 apt-get install -y "${APT_PKGS[@]}" 2>/dev/null || warn "Some apt packages may have failed — continuing."
 
+# ── Aircrack suite (explicit install) ────────────────────────────────────────
+ok "Installing aircrack-ng suite..."
+apt-get install -y aircrack-ng iw wireless-tools 2>/dev/null || warn "aircrack-ng install failed."
+
 # ── Rockyou ──────────────────────────────────────────────────────────────────
 if [ -f /usr/share/wordlists/rockyou.txt.gz ]; then
   ok "Decompressing rockyou.txt..."
