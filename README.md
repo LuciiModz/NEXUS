@@ -16,7 +16,7 @@ Terminal-native cybersecurity toolkit for Linux. 62 tools across 10 categories â
 ## Install
 
 ```bash
-git clone https://github.com/youruser/nexus.git
+git clone https://github.com/LuciiModz/NEXUS.git
 cd nexus
 chmod +x install.sh && sudo ./install.sh
 ```
