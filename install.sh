@@ -34,7 +34,7 @@ apt-get update -qq
 APT_PKGS=(
   nmap gobuster ffuf enum4linux whatweb nikto sqlmap hydra john hashcat
   tcpdump netcat-openbsd dsniff proxychains4 aircrack-ng binwalk
-  libimage-exiftool-perl curl python3-pip ruby perl sleuthkit
+  libimage-exiftool-perl curl python3-pip ruby-full ruby-dev build-essential perl sleuthkit rlwrap
   wordlists seclists
 )
 
@@ -65,6 +65,7 @@ pip3 install bloodhound==1.6.1 --break-system-packages --no-deps 2>/dev/null || 
 
 # ── Ruby gems ────────────────────────────────────────────────────────────────
 ok "Installing Ruby gems (evil-winrm, wpscan)..."
+apt-get install -y ruby-full ruby-dev build-essential 2>/dev/null || true
 gem install evil-winrm wpscan 2>/dev/null || warn "gem install failed."
 
 # ── theHarvester ─────────────────────────────────────────────────────────────
