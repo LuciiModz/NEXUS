@@ -672,13 +672,13 @@ def show_main_menu():
     ))
     console.print()
 
-    col1 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222")
-    col1.add_column("n", style="#555", width=3)
+    col1 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222222")
+    col1.add_column("n", style="#555555", width=3)
     col1.add_column("cat", width=22)
     col1.add_column("cnt", justify="right", width=4)
 
-    col2 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222")
-    col2.add_column("n", style="#555", width=3)
+    col2 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222222")
+    col2.add_column("n", style="#555555", width=3)
     col2.add_column("cat", width=22)
     col2.add_column("cnt", justify="right", width=4)
 
@@ -703,15 +703,15 @@ def show_category(key):
     col = C[key]
     clear()
     console.print()
-    console.print(Rule(f"[bold {col}] {s['label']} [/]  [#444]{len(s['tools'])} tools[/]", style="#333"))
+    console.print(Rule(f"[bold {col}] {s['label']} [/]  [#444]{len(s['tools'])} tools[/]", style="#333333"))
     console.print()
 
     table = Table(box=box.SIMPLE, show_header=True,
                   header_style=f"bold {col}",
-                  border_style="#222", expand=True, padding=(0,1))
-    table.add_column("#", width=4, style="#555")
+                  border_style="#222222", expand=True, padding=(0,1))
+    table.add_column("#", width=4, style="#555555")
     table.add_column("Tool", width=26)
-    table.add_column("Description", style="#777")
+    table.add_column("Description", style="#777777")
 
     for t in s["tools"]:
         table.add_row(t["id"], f"[bold {col}]{t['name']}[/]", t["desc"])
@@ -745,7 +745,7 @@ def show_tool(tool, col):
     console.print(f"\n  [bold {col}]command[/]\n")
     console.print(Panel(
         Syntax(cmd, "bash", theme="one-dark", line_numbers=False, word_wrap=True),
-        border_style="#333", padding=(0,1)
+        border_style="#333333", padding=(0,1)
     ))
     console.print(f"\n  [#ffd60a]r[/] [#555]run[/]  [#444]│[/]  [#00ff9d]g[/] [#555]regenerate[/]  [#444]│[/]  [#666]b[/] [#555]back[/]\n")
     return cmd
@@ -753,13 +753,13 @@ def show_tool(tool, col):
 def show_cheatsheet():
     clear()
     console.print()
-    console.print(Rule("[bold #ffd60a] CHEAT SHEET [/]  [#444]20 one-liners[/]", style="#333"))
+    console.print(Rule("[bold #ffd60a] CHEAT SHEET [/]  [#444]20 one-liners[/]", style="#333333"))
     console.print()
     for title, cmd in CHEATSHEET:
         console.print(f"  [bold #ffd60a]{title}[/]")
         console.print(Panel(
             Syntax(cmd, "bash", theme="one-dark", word_wrap=True),
-            border_style="#222", padding=(0,1)
+            border_style="#222222", padding=(0,1)
         ))
         console.print()
     console.print("  [#555]enter to go back[/]")
