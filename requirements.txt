@@ -1,0 +1,127 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# NEXUS — Linux Cybersec Toolkit
+# Requirements & Install Reference
+# ─────────────────────────────────────────────────────────────────────────────
+# Quick bootstrap (Kali/Parrot/Debian/Ubuntu):
+#   chmod +x install.sh && ./install.sh
+# Or manually:
+#   pip install -r requirements.txt --break-system-packages
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [1] PYTHON DEPENDENCIES  →  pip install -r requirements.txt --break-system-packages
+# ══════════════════════════════════════════════════════════════════════════════
+
+rich>=13.0.0
+impacket>=0.11.0
+bloodhound==1.6.1
+ldap3>=2.9.1
+ldapdomaindump>=0.9.0
+shodan
+pwncat-cs
+Flask-SQLAlchemy>=3.0.1
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [2] APT PACKAGES  →  sudo apt install -y <package>
+# ══════════════════════════════════════════════════════════════════════════════
+
+# sudo apt install -y \
+#   nmap \
+#   gobuster \
+#   ffuf \
+#   enum4linux \
+#   whatweb \
+#   nikto \
+#   sqlmap \
+#   hydra \
+#   john \
+#   hashcat \
+#   hashid \
+#   tcpdump \
+#   netcat-openbsd \
+#   dsniff \
+#   proxychains4 \
+#   aircrack-ng \
+#   binwalk \
+#   libimage-exiftool-perl \
+#   curl \
+#   python3-pip \
+#   ruby \
+#   perl \
+#   sleuthkit \
+#   wordlists \
+#   seclists
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [3] GEM INSTALL (Ruby)
+# ══════════════════════════════════════════════════════════════════════════════
+
+# sudo gem install \
+#   evil-winrm \
+#   wpscan
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [4] MANUAL / BINARY INSTALLS
+# ══════════════════════════════════════════════════════════════════════════════
+
+# --- theHarvester ---
+# git clone https://github.com/laramies/theHarvester.git /opt/theHarvester
+# pip3 install -r /opt/theHarvester/requirements/base.txt
+# ln -s /opt/theHarvester/theHarvester.py /usr/local/bin/theHarvester
+
+# --- Sublist3r ---
+# git clone https://github.com/aboul3la/Sublist3r.git /opt/Sublist3r
+# pip3 install -r /opt/Sublist3r/requirements.txt
+# ln -s /opt/Sublist3r/sublist3r.py /usr/local/bin/sublist3r
+
+# --- Amass ---
+# go install -v github.com/owasp-amass/amass/v4/...@master
+# (or) snap install amass
+
+# --- XSStrike ---
+# git clone https://github.com/s0md3v/XSStrike.git /opt/XSStrike
+# pip3 install -r /opt/XSStrike/requirements.txt
+
+# --- Commix ---
+# git clone https://github.com/commixproject/commix.git /opt/commix
+# ln -s /opt/commix/commix.py /usr/local/bin/commix
+
+# --- Chisel (TCP tunnel) ---
+# wget https://github.com/jpillora/chisel/releases/latest/download/chisel_linux_amd64.gz
+# gunzip chisel_linux_amd64.gz && chmod +x chisel_linux_amd64 && mv chisel_linux_amd64 /usr/local/bin/chisel
+
+# --- pspy (process monitor) ---
+# wget https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -O /usr/local/bin/pspy64
+# chmod +x /usr/local/bin/pspy64
+
+# --- Volatility 3 ---
+# git clone https://github.com/volatilityfoundation/volatility3.git /opt/volatility3
+# pip3 install -r /opt/volatility3/requirements.txt
+
+# --- Metasploit Framework ---
+# curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+# chmod +x msfinstall && sudo ./msfinstall
+
+# --- LinPEAS (downloaded at runtime) ---
+# curl -sL https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o /opt/linpeas.sh
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [5] WORDLISTS
+# ══════════════════════════════════════════════════════════════════════════════
+
+# sudo apt install -y seclists wordlists
+# sudo gzip -d /usr/share/wordlists/rockyou.txt.gz 2>/dev/null
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# [6] OPTIONAL — KALI FULL META-PACKAGE
+# ══════════════════════════════════════════════════════════════════════════════
+
+# sudo apt install -y kali-tools-web kali-tools-passwords kali-tools-wireless \
+#                     kali-tools-exploitation kali-tools-forensics \
+#                     kali-tools-information-gathering
