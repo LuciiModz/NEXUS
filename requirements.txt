@@ -3,25 +3,24 @@
 # Requirements & Install Reference
 # ─────────────────────────────────────────────────────────────────────────────
 # Install:
-#   pip install -r requirements.txt --break-system-packages
-#   pip install pwncat-cs --break-system-packages --no-deps
+#   pip install -r requirements.txt --break-system-packages --no-deps
 # ─────────────────────────────────────────────────────────────────────────────
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [1] PYTHON DEPENDENCIES  →  pip install -r requirements.txt --break-system-packages
+# [1] PYTHON DEPENDENCIES
+# Install with: pip install -r requirements.txt --break-system-packages --no-deps
 # ══════════════════════════════════════════════════════════════════════════════
 
 rich>=13.0.0
 impacket>=0.11.0
-bloodhound==1.6.1
 ldap3>=2.9.1
 ldapdomaindump>=0.9.0
-shodan
-Flask-SQLAlchemy>=3.0.1
 
-# pwncat-cs conflicts with rich>=13 — install separately after:
-#   pip install pwncat-cs --break-system-packages --no-deps
+# These conflict with each other — install separately via install.sh:
+# pip install shodan --break-system-packages --no-deps
+# pip install bloodhound==1.6.1 --break-system-packages --no-deps
+# pip install pwncat-cs --break-system-packages --no-deps
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -60,9 +59,7 @@ Flask-SQLAlchemy>=3.0.1
 # [3] GEM INSTALL (Ruby)
 # ══════════════════════════════════════════════════════════════════════════════
 
-# sudo gem install \
-#   evil-winrm \
-#   wpscan
+# sudo gem install evil-winrm wpscan
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -71,7 +68,7 @@ Flask-SQLAlchemy>=3.0.1
 
 # --- theHarvester ---
 # git clone https://github.com/laramies/theHarvester.git /opt/theHarvester
-# pip3 install -r /opt/theHarvester/requirements/base.txt
+# pip3 install -r /opt/theHarvester/requirements/base.txt --no-deps
 # ln -s /opt/theHarvester/theHarvester.py /usr/local/bin/theHarvester
 
 # --- Sublist3r ---

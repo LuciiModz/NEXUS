@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
 # NEXUS — Auto Installer
-# Usage: chmod +x install.sh && ./install.sh
+# Usage: chmod +x install.sh && sudo ./install.sh
 # ─────────────────────────────────────────────────────────────────────────────
 
 set -e
@@ -23,7 +23,6 @@ echo " ██║ ╚████║███████╗██╔╝ ██�
 echo " ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝"
 echo -e "${NC} Linux Cybersec Toolkit — Installer\n"
 
-# ── Root check ──────────────────────────────────────────────────────────────
 if [ "$EUID" -ne 0 ]; then
   warn "Not running as root — some installs may need sudo."
 fi
@@ -42,32 +41,44 @@ APT_PKGS=(
 ok "Installing apt packages..."
 apt-get install -y "${APT_PKGS[@]}" 2>/dev/null || warn "Some apt packages may have failed — continuing."
 
-# ── Rockyou wordlist ─────────────────────────────────────────────────────────
+# ── Rockyou ──────────────────────────────────────────────────────────────────
 if [ -f /usr/share/wordlists/rockyou.txt.gz ]; then
   ok "Decompressing rockyou.txt..."
   gzip -dk /usr/share/wordlists/rockyou.txt.gz 2>/dev/null || true
 fi
 
-# ── Python packages ───────────────────────────────────────────────────────────
-ok "Installing Python dependencies..."
-pip3 install rich impacket bloodhound==1.6.1 ldap3 ldapdomaindump shodan Flask-SQLAlchemy --break-system-packages 2>/dev/null \
-  || pip3 install rich impacket bloodhound==1.6.1 ldap3 ldapdomaindump shodan Flask-SQLAlchemy
-ok "Installing pwncat-cs (no-deps to avoid rich conflict)..."
-pip3 install pwncat-cs --break-system-packages --no-deps 2>/dev/null || warn "pwncat-cs install failed — run manually: pip3 install pwncat-cs --no-deps"
+# ── Core Python packages (safe, no conflicts) ─────────────────────────────────
+ok "Installing core Python packages..."
+pip3 install rich impacket ldap3 ldapdomaindump \
+  --break-system-packages --ignore-installed packaging 2>/dev/null || \
+pip3 install rich impacket ldap3 ldapdomaindump \
+  --ignore-installed packaging
 
-# ── Ruby gems ─────────────────────────────────────────────────────────────────
+# ── Shodan (isolated) ─────────────────────────────────────────────────────────
+ok "Installing shodan..."
+pip3 install shodan --break-system-packages --no-deps 2>/dev/null || warn "shodan install failed."
+
+# ── bloodhound (isolated) ─────────────────────────────────────────────────────
+ok "Installing bloodhound..."
+pip3 install bloodhound==1.6.1 --break-system-packages --no-deps 2>/dev/null || warn "bloodhound install failed."
+
+# ── pwncat-cs (isolated — conflicts with rich>=13) ───────────────────────────
+ok "Installing pwncat-cs (no-deps)..."
+pip3 install pwncat-cs --break-system-packages --no-deps 2>/dev/null || warn "pwncat-cs install failed."
+
+# ── Ruby gems ────────────────────────────────────────────────────────────────
 ok "Installing Ruby gems (evil-winrm, wpscan)..."
-gem install evil-winrm wpscan 2>/dev/null || warn "gem install failed — install ruby first."
+gem install evil-winrm wpscan 2>/dev/null || warn "gem install failed."
 
 # ── theHarvester ─────────────────────────────────────────────────────────────
 if ! command -v theHarvester &>/dev/null; then
   ok "Installing theHarvester..."
   git clone -q https://github.com/laramies/theHarvester.git /opt/theHarvester 2>/dev/null || true
-  pip3 install -r /opt/theHarvester/requirements/base.txt --break-system-packages 2>/dev/null || true
+  pip3 install -r /opt/theHarvester/requirements/base.txt --break-system-packages --no-deps 2>/dev/null || true
   ln -sf /opt/theHarvester/theHarvester.py /usr/local/bin/theHarvester
 fi
 
-# ── Sublist3r ─────────────────────────────────────────────────────────────────
+# ── Sublist3r ────────────────────────────────────────────────────────────────
 if ! command -v sublist3r &>/dev/null; then
   ok "Installing Sublist3r..."
   git clone -q https://github.com/aboul3la/Sublist3r.git /opt/Sublist3r 2>/dev/null || true
@@ -81,7 +92,7 @@ if ! command -v amass &>/dev/null; then
   snap install amass 2>/dev/null || warn "snap not available — install amass manually."
 fi
 
-# ── XSStrike ──────────────────────────────────────────────────────────────────
+# ── XSStrike ─────────────────────────────────────────────────────────────────
 if [ ! -d /opt/XSStrike ]; then
   ok "Installing XSStrike..."
   git clone -q https://github.com/s0md3v/XSStrike.git /opt/XSStrike 2>/dev/null || true
@@ -89,24 +100,22 @@ if [ ! -d /opt/XSStrike ]; then
   ln -sf /opt/XSStrike/xsstrike.py /usr/local/bin/xsstrike
 fi
 
-# ── Commix ────────────────────────────────────────────────────────────────────
+# ── Commix ───────────────────────────────────────────────────────────────────
 if ! command -v commix &>/dev/null; then
   ok "Installing Commix..."
   git clone -q https://github.com/commixproject/commix.git /opt/commix 2>/dev/null || true
   ln -sf /opt/commix/commix.py /usr/local/bin/commix
 fi
 
-# ── Chisel ────────────────────────────────────────────────────────────────────
+# ── Chisel ───────────────────────────────────────────────────────────────────
 if ! command -v chisel &>/dev/null; then
   ok "Installing Chisel..."
-  CHISEL_URL="https://github.com/jpillora/chisel/releases/latest/download/chisel_linux_amd64.gz"
-  wget -q "$CHISEL_URL" -O /tmp/chisel.gz && \
-    gunzip /tmp/chisel.gz && \
-    mv /tmp/chisel /usr/local/bin/chisel && \
-    chmod +x /usr/local/bin/chisel || warn "Chisel install failed."
+  wget -q "https://github.com/jpillora/chisel/releases/latest/download/chisel_linux_amd64.gz" \
+    -O /tmp/chisel.gz && gunzip /tmp/chisel.gz && \
+    mv /tmp/chisel /usr/local/bin/chisel && chmod +x /usr/local/bin/chisel || warn "Chisel install failed."
 fi
 
-# ── pspy ──────────────────────────────────────────────────────────────────────
+# ── pspy ─────────────────────────────────────────────────────────────────────
 if ! command -v pspy64 &>/dev/null; then
   ok "Installing pspy64..."
   wget -q "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64" \
@@ -121,26 +130,20 @@ if [ ! -d /opt/volatility3 ]; then
   ln -sf /opt/volatility3/vol.py /usr/local/bin/vol.py
 fi
 
-# ── hashid ────────────────────────────────────────────────────────────────────
+# ── hashid ───────────────────────────────────────────────────────────────────
 if ! command -v hashid &>/dev/null; then
   ok "Installing hashid..."
   pip3 install hashid --break-system-packages 2>/dev/null || true
 fi
 
-# ── BloodHound Python ────────────────────────────────────────────────────────
-if ! command -v bloodhound-python &>/dev/null; then
-  ok "Installing bloodhound-python..."
-  pip3 install bloodhound --break-system-packages 2>/dev/null || true
-fi
-
-# ── LinPEAS (cache locally) ───────────────────────────────────────────────────
+# ── LinPEAS ──────────────────────────────────────────────────────────────────
 if [ ! -f /opt/linpeas.sh ]; then
   ok "Downloading LinPEAS..."
   curl -sL https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh \
     -o /opt/linpeas.sh && chmod +x /opt/linpeas.sh || warn "LinPEAS download failed."
 fi
 
-# ── Done ──────────────────────────────────────────────────────────────────────
+# ── Done ─────────────────────────────────────────────────────────────────────
 echo ""
 ok "Install complete. Run the toolkit:"
 echo -e "  ${GREEN}python3 nexus.py${NC}\n"
