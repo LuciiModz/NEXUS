@@ -1,15 +1,17 @@
-# NEXUS — Linux Cybersec Toolkit
+# LUCII'S TOOLKIT — The Ultimate Linux Hacking Suite
 
 ```
- ███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗
- ████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝
- ██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗
- ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║
- ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║
- ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+██╗     ██╗   ██╗ ██████╗██╗██╗███████╗    ████████╗ ██████╗  ██████╗ ██╗     ██╗  ██╗██╗████████╗
+██║     ██║   ██║██╔════╝██║██║██╔════╝    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ██║ ██╔╝██║╚══██╔══╝
+██║     ██║   ██║██║     ██║██║███████╗       ██║   ██║   ██║██║   ██║██║     █████╔╝ ██║   ██║
+██║     ██║   ██║██║     ██║██║╚════██║       ██║   ██║   ██║██║   ██║██║     ██╔═██╗ ██║   ██║
+███████╗╚██████╔╝╚██████╗██║██║███████║       ██║   ╚██████╔╝╚██████╔╝███████╗██║  ██╗██║   ██║
+╚══════╝ ╚═════╝  ╚═════╝╚═╝╚═╝╚══════╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝
 ```
 
-Terminal-native cybersecurity toolkit for Linux. 62 tools across 10 categories — fill fields, generate commands, run them directly, no browser needed.
+**made by lucii**
+
+164 tools · 15 categories · Terminal-native · No browser needed
 
 ---
 
@@ -20,35 +22,40 @@ git clone https://github.com/LuciiModz/NEXUS.git
 cd NEXUS
 chmod +x install.sh && sudo ./install.sh
 pip install -r requirements.txt --break-system-packages
-python3 nexus.py
+python3 lucii.py
 ```
 
 ---
 
 ## Categories
 
-| # | Category      | Tools | Coverage |
-|---|--------------|-------|----------|
-| 1 | RECON        | 9     | nmap, gobuster, amass, ffuf, shodan, theHarvester, sublist3r |
-| 2 | WEB ATTACK   | 7     | sqlmap, xsstrike, nikto, wpscan, commix, SSRF probe |
-| 3 | PRIVESC      | 8     | linpeas, SUID, pspy, cron, docker escape, capabilities |
-| 4 | NETWORK      | 7     | tcpdump, ARP MITM, chisel, proxychains, WiFi WPA crack |
-| 5 | EXPLOIT      | 6     | MSF handler, revshell gen (7 types), msfvenom, rlwrap nc |
-| 6 | CREDS / HASH | 6     | hashcat, john, hydra, hashid, pass-the-hash, secretsdump |
-| 7 | ACTIVE DIR   | 5     | bloodhound, kerberoast, AS-REP, LDAP dump, evil-winrm |
-| 8 | PERSISTENCE  | 4     | cron, systemd, .bashrc hook, SSH key drop |
-| 9 | LOG CLEAR    | 5     | log wipe, history nuke, utmp, shred, timestamp stomp |
-| 10| FORENSICS    | 5     | volatility3, binwalk, strings, timeline, exiftool |
+| # | Category          | Tools | Coverage |
+|---|------------------|-------|----------|
+| 1  | RECON & OSINT    | 20    | nmap x3, gobuster, ffuf, amass, shodan, wayback, crt.sh, masscan, dnsrecon |
+| 2  | WEB ATTACK       | 15    | sqlmap, xsstrike, nikto, wpscan, commix, CORS, JWT crack, param miner, XXE |
+| 3  | PRIVESC          | 15    | linpeas, SUID, caps, cron, pspy, GTFOBins, LXD, NFS, env secrets |
+| 4  | NETWORK & MITM   | 14    | tcpdump, ARP spoof, chisel, responder, mitm6, bettercap, VLAN hop, socat |
+| 5  | EXPLOIT          | 13    | MSF, revshell x7, msfvenom, EternalBlue, PrintNightmare, ROP, ret2libc |
+| 6  | CREDS & HASHES   | 14    | hashcat x3, john, hydra x3, CME, PTH, secretsdump, zip2john, kerbrute |
+| 7  | ACTIVE DIRECTORY | 11    | bloodhound, kerberoast, AS-REP, DCSync, golden ticket, zerologon, SMB relay |
+| 8  | PERSISTENCE      | 7     | cron, systemd, bashrc, SSH key, MOTD, LD_PRELOAD, at job |
+| 9  | LOG CLEAR        | 7     | full wipe, history nuke, utmp, shred, stomp, disable syslog, selective edit |
+| 10 | FORENSICS        | 10    | volatility3, binwalk, exiftool, yara, PCAP extract, disk image, entropy |
+| 11 | PHISHING & SE    | 7     | GoPhish, SET, evilginx2, beef-xss, site clone, email spoof check |
+| 12 | MOBILE / APK     | 7     | apktool, frida, SSL bypass, ADB, MobSF, static analysis |
+| 13 | CRYPTO & ENCODING| 10    | b64, ROT13, caesar brute, XOR, hash gen, openssl, steghide, cyberchef |
+| 14 | CLOUD ATTACK     | 7     | AWS/GCP/Azure metadata SSRF, S3 enum, docker registry, kubernetes |
+| 15 | MALWARE ANALYSIS | 7     | VirusTotal, PE analysis, strace, packer detect, deobfuscate PowerShell |
 
 ---
 
 ## Usage
 
 ```
-python3 nexus.py
+python3 lucii.py
 
-  1-10  select category
-  c     cheat sheet (14 quick-reference one-liners)
+  1-15  select category
+  c     cheat sheet (20 quick-reference one-liners)
   q     quit
 
 Inside a category:
@@ -56,7 +63,7 @@ Inside a category:
   b     back
 
 Inside a tool:
-  fill fields → GENERATE → r (run) / g (regenerate) / b (back)
+  fill fields → r (run) / g (regenerate) / b (back)
 ```
 
 ---

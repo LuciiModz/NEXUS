@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────────
-# NEXUS — Auto Installer
+# LUCII'S TOOLKIT — Auto Installer
 # Usage: chmod +x install.sh && sudo ./install.sh
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -14,14 +14,15 @@ ok()   { echo -e "${GREEN}[+]${NC} $*"; }
 warn() { echo -e "${YELLOW}[!]${NC} $*"; }
 err()  { echo -e "${RED}[-]${NC} $*"; }
 
-echo -e "\n${GREEN}"
-echo " ███╗   ██╗███████╗██╗  ██╗██╗   ██╗███████╗"
-echo " ████╗  ██║██╔════╝╚██╗██╔╝██║   ██║██╔════╝"
-echo " ██╔██╗ ██║█████╗   ╚███╔╝ ██║   ██║███████╗"
-echo " ██║╚██╗██║██╔══╝   ██╔██╗ ██║   ██║╚════██║"
-echo " ██║ ╚████║███████╗██╔╝ ██╗╚██████╔╝███████║"
-echo " ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝"
-echo -e "${NC} Linux Cybersec Toolkit — Installer\n"
+echo -e "\n${RED}"
+echo "██╗     ██╗   ██╗ ██████╗██╗██╗███████╗    ████████╗ ██████╗  ██████╗ ██╗     ██╗  ██╗██╗████████╗"
+echo "██║     ██║   ██║██╔════╝██║██║██╔════╝    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     ██║ ██╔╝██║╚══██╔══╝"
+echo "██║     ██║   ██║██║     ██║██║███████╗       ██║   ██║   ██║██║   ██║██║     █████╔╝ ██║   ██║   "
+echo "██║     ██║   ██║██║     ██║██║╚════██║       ██║   ██║   ██║██║   ██║██║     ██╔═██╗ ██║   ██║   "
+echo "███████╗╚██████╔╝╚██████╗██║██║███████║       ██║   ╚██████╔╝╚██████╔╝███████╗██║  ██╗██║   ██║   "
+echo "╚══════╝ ╚═════╝  ╚═════╝╚═╝╚═╝╚══════╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝"
+echo -e "${NC}"
+echo -e "                         ${RED}made by lucii${NC} — The Ultimate Hacking Toolkit\n"
 
 if [ "$EUID" -ne 0 ]; then
   warn "Not running as root — some installs may need sudo."
@@ -34,14 +35,15 @@ apt-get update -qq
 APT_PKGS=(
   nmap gobuster ffuf enum4linux whatweb nikto sqlmap hydra john hashcat
   tcpdump netcat-openbsd dsniff proxychains4 aircrack-ng iw wireless-tools binwalk
-  libimage-exiftool-perl curl python3-pip ruby-full ruby-dev build-essential perl sleuthkit rlwrap
+  libimage-exiftool-perl curl python3-pip ruby-full ruby-dev build-essential
+  perl sleuthkit rlwrap apktool steghide yara socat dnsrecon masscan
   wordlists seclists
 )
 
 ok "Installing apt packages..."
 apt-get install -y "${APT_PKGS[@]}" 2>/dev/null || warn "Some apt packages may have failed — continuing."
 
-# ── Aircrack suite (explicit install) ────────────────────────────────────────
+# ── Aircrack suite (explicit) ─────────────────────────────────────────────────
 ok "Installing aircrack-ng suite..."
 apt-get install -y aircrack-ng iw wireless-tools 2>/dev/null || warn "aircrack-ng install failed."
 
@@ -51,7 +53,7 @@ if [ -f /usr/share/wordlists/rockyou.txt.gz ]; then
   gzip -dk /usr/share/wordlists/rockyou.txt.gz 2>/dev/null || true
 fi
 
-# ── Core Python packages (safe, no conflicts) ─────────────────────────────────
+# ── Core Python packages ──────────────────────────────────────────────────────
 ok "Installing core Python packages..."
 pip3 install rich impacket ldap3 ldapdomaindump \
   --break-system-packages --ignore-installed packaging 2>/dev/null || \
@@ -66,8 +68,11 @@ pip3 install shodan --break-system-packages --no-deps 2>/dev/null || warn "shoda
 ok "Installing bloodhound..."
 pip3 install bloodhound==1.6.1 --break-system-packages --no-deps 2>/dev/null || warn "bloodhound install failed."
 
+# ── scapy ─────────────────────────────────────────────────────────────────────
+ok "Installing scapy..."
+pip3 install scapy --break-system-packages 2>/dev/null || warn "scapy install failed."
 
-# ── Ruby gems ────────────────────────────────────────────────────────────────
+# ── Ruby gems ─────────────────────────────────────────────────────────────────
 ok "Installing Ruby gems (evil-winrm, wpscan)..."
 apt-get install -y ruby-full ruby-dev build-essential 2>/dev/null || true
 gem install evil-winrm wpscan 2>/dev/null || warn "gem install failed."
@@ -80,7 +85,7 @@ if ! command -v theHarvester &>/dev/null; then
   ln -sf /opt/theHarvester/theHarvester.py /usr/local/bin/theHarvester
 fi
 
-# ── Sublist3r ────────────────────────────────────────────────────────────────
+# ── Sublist3r ─────────────────────────────────────────────────────────────────
 if ! command -v sublist3r &>/dev/null; then
   ok "Installing Sublist3r..."
   git clone -q https://github.com/aboul3la/Sublist3r.git /opt/Sublist3r 2>/dev/null || true
@@ -94,7 +99,7 @@ if ! command -v amass &>/dev/null; then
   snap install amass 2>/dev/null || warn "snap not available — install amass manually."
 fi
 
-# ── XSStrike ─────────────────────────────────────────────────────────────────
+# ── XSStrike ──────────────────────────────────────────────────────────────────
 if [ ! -d /opt/XSStrike ]; then
   ok "Installing XSStrike..."
   git clone -q https://github.com/s0md3v/XSStrike.git /opt/XSStrike 2>/dev/null || true
@@ -102,14 +107,14 @@ if [ ! -d /opt/XSStrike ]; then
   ln -sf /opt/XSStrike/xsstrike.py /usr/local/bin/xsstrike
 fi
 
-# ── Commix ───────────────────────────────────────────────────────────────────
+# ── Commix ────────────────────────────────────────────────────────────────────
 if ! command -v commix &>/dev/null; then
   ok "Installing Commix..."
   git clone -q https://github.com/commixproject/commix.git /opt/commix 2>/dev/null || true
   ln -sf /opt/commix/commix.py /usr/local/bin/commix
 fi
 
-# ── Chisel ───────────────────────────────────────────────────────────────────
+# ── Chisel ────────────────────────────────────────────────────────────────────
 if ! command -v chisel &>/dev/null; then
   ok "Installing Chisel..."
   wget -q "https://github.com/jpillora/chisel/releases/latest/download/chisel_linux_amd64.gz" \
@@ -117,7 +122,7 @@ if ! command -v chisel &>/dev/null; then
     mv /tmp/chisel /usr/local/bin/chisel && chmod +x /usr/local/bin/chisel || warn "Chisel install failed."
 fi
 
-# ── pspy ─────────────────────────────────────────────────────────────────────
+# ── pspy ──────────────────────────────────────────────────────────────────────
 if ! command -v pspy64 &>/dev/null; then
   ok "Installing pspy64..."
   wget -q "https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64" \
@@ -132,20 +137,40 @@ if [ ! -d /opt/volatility3 ]; then
   ln -sf /opt/volatility3/vol.py /usr/local/bin/vol.py
 fi
 
-# ── hashid ───────────────────────────────────────────────────────────────────
+# ── Responder ─────────────────────────────────────────────────────────────────
+if ! command -v responder &>/dev/null; then
+  ok "Installing Responder..."
+  git clone -q https://github.com/lgandx/Responder.git /opt/Responder 2>/dev/null || true
+  ln -sf /opt/Responder/Responder.py /usr/local/bin/responder
+fi
+
+# ── CrackMapExec ──────────────────────────────────────────────────────────────
+if ! command -v crackmapexec &>/dev/null; then
+  ok "Installing CrackMapExec..."
+  pip3 install crackmapexec --break-system-packages 2>/dev/null || warn "CME install failed."
+fi
+
+# ── Kerbrute ──────────────────────────────────────────────────────────────────
+if ! command -v kerbrute &>/dev/null; then
+  ok "Installing Kerbrute..."
+  wget -q "https://github.com/ropnop/kerbrute/releases/latest/download/kerbrute_linux_amd64" \
+    -O /usr/local/bin/kerbrute && chmod +x /usr/local/bin/kerbrute || warn "Kerbrute install failed."
+fi
+
+# ── hashid ────────────────────────────────────────────────────────────────────
 if ! command -v hashid &>/dev/null; then
   ok "Installing hashid..."
   pip3 install hashid --break-system-packages 2>/dev/null || true
 fi
 
-# ── LinPEAS ──────────────────────────────────────────────────────────────────
+# ── LinPEAS ───────────────────────────────────────────────────────────────────
 if [ ! -f /opt/linpeas.sh ]; then
   ok "Downloading LinPEAS..."
   curl -sL https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh \
     -o /opt/linpeas.sh && chmod +x /opt/linpeas.sh || warn "LinPEAS download failed."
 fi
 
-# ── Done ─────────────────────────────────────────────────────────────────────
+# ── Done ──────────────────────────────────────────────────────────────────────
 echo ""
 ok "Install complete. Run the toolkit:"
-echo -e "  ${GREEN}python3 nexus.py${NC}\n"
+echo -e "  ${RED}python3 lucii.py${NC}\n"
