@@ -19,20 +19,9 @@ Terminal-native cybersecurity toolkit for Linux. 62 tools across 10 categories â
 git clone https://github.com/LuciiModz/NEXUS.git
 cd NEXUS
 chmod +x install.sh && sudo ./install.sh
-```
-
-Or manually:
-
-```bash
-pip install -r requirements.txt --break-system-packages --ignore-installed packaging
+pip install -r requirements.txt --break-system-packages
 python3 nexus.py
 ```
-
-> **Note:** If you hit a `packaging 25.0` error during install, run:
-> ```bash
-> pip3 install packaging --break-system-packages --ignore-installed packaging
-> ```
-> Then re-run `install.sh` or go straight to `python3 nexus.py` â€” it won't affect functionality.
 
 ---
 
@@ -44,7 +33,7 @@ python3 nexus.py
 | 2 | WEB ATTACK   | 7     | sqlmap, xsstrike, nikto, wpscan, commix, SSRF probe |
 | 3 | PRIVESC      | 8     | linpeas, SUID, pspy, cron, docker escape, capabilities |
 | 4 | NETWORK      | 7     | tcpdump, ARP MITM, chisel, proxychains, WiFi WPA crack |
-| 5 | EXPLOIT      | 6     | MSF handler, revshell gen (7 types), msfvenom, pwncat |
+| 5 | EXPLOIT      | 6     | MSF handler, revshell gen (7 types), msfvenom, rlwrap nc |
 | 6 | CREDS / HASH | 6     | hashcat, john, hydra, hashid, pass-the-hash, secretsdump |
 | 7 | ACTIVE DIR   | 5     | bloodhound, kerberoast, AS-REP, LDAP dump, evil-winrm |
 | 8 | PERSISTENCE  | 4     | cron, systemd, .bashrc hook, SSH key drop |
@@ -75,8 +64,9 @@ Inside a tool:
 ## Requirements
 
 - Python 3.8+
-- `rich` (pip)
-- See `requirements.txt` for full dependency list and `install.sh` for automated setup
+- `rich`, `impacket`, `ldap3`, `ldapdomaindump` (pip)
+- See `requirements.txt` for full Python dep list
+- See `install.sh` for all system tools (apt, gem, binary)
 
 ---
 
