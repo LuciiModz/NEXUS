@@ -33,7 +33,7 @@ apt-get update -qq
 
 APT_PKGS=(
   nmap gobuster ffuf enum4linux whatweb nikto sqlmap hydra john hashcat
-  tcpdump netcat-openbsd dsniff proxychains4 aircrack-ng binwalk
+  tcpdump netcat-openbsd dsniff proxychains4 aircrack-ng iw wireless-tools binwalk
   libimage-exiftool-perl curl python3-pip ruby-full ruby-dev build-essential perl sleuthkit rlwrap
   wordlists seclists
 )
