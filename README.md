@@ -19,7 +19,7 @@
 
 ```bash
 git clone https://github.com/LuciiModz/lucii-toolkit-Linux.git
-cd NEXUS
+cd lucii-toolkit-Linux
 chmod +x install.sh && sudo ./install.sh
 pip install -r requirements.txt --break-system-packages
 python3 lucii.py
