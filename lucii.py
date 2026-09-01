@@ -672,28 +672,16 @@ def show_main_menu():
     ))
     console.print()
 
-    col1 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222222")
-    col1.add_column("n", style="#555555", width=3)
-    col1.add_column("cat", width=22)
-    col1.add_column("cnt", justify="right", width=4)
+    menu = Table(box=box.SIMPLE, show_header=False, padding=(0,2), border_style="#222222", expand=False)
+    menu.add_column("n", style="#555555", width=4)
+    menu.add_column("cat", width=24)
+    menu.add_column("cnt", justify="right", width=4)
 
-    col2 = Table(box=box.MINIMAL, show_header=False, padding=(0,1), border_style="#222222")
-    col2.add_column("n", style="#555555", width=3)
-    col2.add_column("cat", width=22)
-    col2.add_column("cnt", justify="right", width=4)
-
-    keys = list(TOOLS.items())
-    mid = len(keys) // 2 + len(keys) % 2
-
-    for i, (key, s) in enumerate(keys, 1):
+    for i, (key, s) in enumerate(TOOLS.items(), 1):
         col = C[key]
-        row = (str(i), f"[bold {col}]{s['label']}[/]", f"[{col}]{len(s['tools'])}[/]")
-        if i <= mid:
-            col1.add_row(*row)
-        else:
-            col2.add_row(*row)
+        menu.add_row(str(i), f"[bold {col}]{s['label']}[/]", f"[{col}]{len(s['tools'])}[/]")
 
-    console.print(Columns([col1, col2], equal=True, expand=True))
+    console.print(Align.center(menu))
     console.print()
     console.print(f"  [#444]select[/] [#ff4d6d]1-{len(TOOLS)}[/]  [#444]│[/]  [#ffd60a]c[/] [#444]cheatsheet[/]  [#444]│[/]  [#666]q[/] [#444]quit[/]")
     console.print()
